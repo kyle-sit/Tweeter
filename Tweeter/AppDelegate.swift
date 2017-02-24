@@ -51,24 +51,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(url.description)
         
         let requestToken = BDBOAuth1Credential(queryString: url.query)
-        let twitterClient = BDBOAuth1SessionManager(baseURL: NSURL(string: "https://api.twitter.com/")! as URL!, consumerKey: "GEutc46f8dzb0vGxwiU0HcGm6", consumerSecret: "Gjr89aNAx54DzJGkrJbvsoRN4ZhNpojwu6h1ruIFacQrfpNi8e")
+        let client = TwitterClient.sharedInstance
         
-        twitterClient?.fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential?) in
+        TwitterClient.sharedInstance?.fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential?) in
+            
             print("Received Access Token")
             
-            twitterClient?.get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-                //print("account: \(response)")
-                let user  = response as! [NSDictionary]
-            }, failure: { (task: URLSessionDataTask?, error: Error) in
-                print("error: \(error.localizedDescription)")
+            client?.homeTimeLine(success: { (tweets: [Tweet]) in
+                for tweet in tweets {
+                    print(tweet.text!)
+                }
+            }, failure: { (error: NSError) in
+                print(error.localizedDescription)
             })
             
-            twitterClient?.get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-                //print("account: \(response)")
-                let tweets  = response as! NSDictionary
-            }, failure: { (task: URLSessionDataTask?, error: Error) in
-                print("error: \(error.localizedDescription)")
-            })
+            client?.currentAccount()
             
         }, failure: { (error: Error?) in
             print("error: \(error?.localizedDescription)")
