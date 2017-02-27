@@ -10,6 +10,7 @@ import UIKit
 
 class TweetsViewController: UIViewController {
 
+    @IBOutlet weak var tweetsTableView: UITableView!
     var tweets: [Tweet]!
     
     override func viewDidLoad() {
@@ -32,6 +33,10 @@ class TweetsViewController: UIViewController {
     }
     
 
+    @IBAction func onLogout(_ sender: Any) {
+        TwitterClient.sharedInstance?.logout()
+    }
+    
     /*
     // MARK: - Navigation
 

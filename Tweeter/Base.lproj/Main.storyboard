@@ -59,7 +59,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="79" id="spv-b1-JhK">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="tweetCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="tweetCell" rowHeight="79" id="spv-b1-JhK" customClass="TweetCell" customModule="Tweeter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="spv-b1-JhK" id="Agm-BT-1V4">
@@ -72,7 +72,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="TPE-d7-aqc"/>
+                    <navigationItem key="navigationItem" id="TPE-d7-aqc">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="uCf-R7-q2O">
+                            <connections>
+                                <action selector="onLogout:" destination="7Vs-kF-z0M" id="0Y4-hR-2v9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tweetsTableView" destination="QkZ-wC-VVc" id="b4i-rQ-2LE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="itW-69-6E2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -81,7 +90,7 @@
         <!--Navigation Controller-->
         <scene sceneID="E99-WT-LUw">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="b1G-yf-1gv" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TweetsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="b1G-yf-1gv" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="iuy-9O-vvG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

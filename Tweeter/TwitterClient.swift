@@ -21,7 +21,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         loginFailure = failure
         
         TwitterClient.sharedInstance?.deauthorize()
-        TwitterClient.sharedInstance?.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: NSURL(string:"tweeter://") as URL!, scope: nil, success: { (requestToken:BDBOAuth1Credential?) in
+        TwitterClient.sharedInstance?.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: NSURL(string:"tweeter://oauth") as URL!, scope: nil, success: { (requestToken:BDBOAuth1Credential?) in
         print("Received Token")
         
         let url = NSURL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\((requestToken?.token)!)")!
@@ -33,14 +33,24 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func logout() {
+        User.currentUser = nil
+        deauthorize()
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UserDidLogout"), object: nil)
+    }
+    
     func handleOpenUrl(url: NSURL) {
         let requestToken = BDBOAuth1Credential(queryString: url.query)
         
         fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential?) in
             
-            print("Received Access Token")
-            self.loginSuccess?()
-            
+            self.currentAccount(success: { (user: User) in
+                User.currentUser = user
+                self.loginSuccess?()
+            }, failure: { (error: NSError) in
+                self.loginFailure?(error)
+            })
         }, failure: { (error: Error?) in
             print("error: \(error?.localizedDescription)")
             self.loginFailure?(error as! NSError)
@@ -60,19 +70,16 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func currentAccount() {
+    func currentAccount(success: @escaping (User) -> (), failure: @escaping (NSError) -> ()) {
         get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
 
             let userDictionary  = response as! NSDictionary
             let user = User(dictionary: userDictionary)
             
-            print("name: \(user.name)")
-            print("screenname: \(user.screenName)")
-            print("profile url: \(user.profileURL)")
-            print("description: \(user.tagline)")
+            success(user)
             
         }, failure: { (task: URLSessionDataTask?, error: Error) in
-            print("error: \(error.localizedDescription)")
+            failure(error as NSError)
         })
     }
     
