@@ -13,6 +13,40 @@ class TwitterClient: BDBOAuth1SessionManager {
 
     static let sharedInstance = TwitterClient(baseURL: NSURL(string: "https://api.twitter.com/")! as URL!, consumerKey: "GEutc46f8dzb0vGxwiU0HcGm6", consumerSecret: "Gjr89aNAx54DzJGkrJbvsoRN4ZhNpojwu6h1ruIFacQrfpNi8e")
     
+    var loginSuccess: (() -> ())?
+    var loginFailure: ((NSError) -> ())?
+    
+    func login(success: @escaping () -> (), failure: @escaping (NSError) -> ()) {
+        loginSuccess = success
+        loginFailure = failure
+        
+        TwitterClient.sharedInstance?.deauthorize()
+        TwitterClient.sharedInstance?.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: NSURL(string:"tweeter://") as URL!, scope: nil, success: { (requestToken:BDBOAuth1Credential?) in
+        print("Received Token")
+        
+        let url = NSURL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\((requestToken?.token)!)")!
+        UIApplication.shared.open(url as URL)
+        
+        }, failure: { (error: Error?) in
+            print("error: \(error?.localizedDescription)")
+            self.loginFailure?(error as! NSError)
+        })
+    }
+    
+    func handleOpenUrl(url: NSURL) {
+        let requestToken = BDBOAuth1Credential(queryString: url.query)
+        
+        fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential?) in
+            
+            print("Received Access Token")
+            self.loginSuccess?()
+            
+        }, failure: { (error: Error?) in
+            print("error: \(error?.localizedDescription)")
+            self.loginFailure?(error as! NSError)
+        })
+    }
+    
     func homeTimeLine(success: @escaping ([Tweet]) -> (), failure: @escaping (NSError) -> ()) {
         get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             

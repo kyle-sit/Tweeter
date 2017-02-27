@@ -16,9 +16,9 @@ class User: NSObject {
     var tagline: NSString?
     
     init(dictionary: NSDictionary) {
-        name = dictionary["name"] as? String as NSString?
-        screenName = dictionary["screen_name"] as? String as NSString?
-        tagline = dictionary["description"] as? String as NSString?
+        name = dictionary["name"] as? NSString
+        screenName = dictionary["screen_name"] as? NSString
+        tagline = dictionary["description"] as? NSString
         
         let profileURLString = dictionary["profile_image_url_https"] as? String
         if let profileURLString = profileURLString {
