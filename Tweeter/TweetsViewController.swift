@@ -10,7 +10,8 @@ import UIKit
 
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var tweetsTableView: UITableView!
+    @IBOutlet weak var tweetsTableView: UITableView!    
+    
     var tweets: [Tweet]!
     
     override func viewDidLoad() {
@@ -61,6 +62,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.username.text = tweet.person?.screenName as String?
         cell.tweetText.text = tweet.text as String?
         cell.timeStamp.text = tweet.timestamp?.description
+        cell.favoriteCount.text = "\(tweet.favoritesCount)"
+        cell.retweetCount.text = "\(tweet.retweetCount)"
         
         return cell
     }

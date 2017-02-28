@@ -83,4 +83,12 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    /*func retweet(success: (Tweet) -> (), failure: (NSError) -> ()) {
+
+    }
+    
+    func favorite(success: (Tweet) -> (), failure: (NSError) -> ()) {
+
+    }*/
+    
 }
