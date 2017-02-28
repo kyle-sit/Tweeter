@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tweetsTableView: UITableView!
     var tweets: [Tweet]!
@@ -16,15 +16,23 @@ class TweetsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tweetsTableView.delegate = self
+        tweetsTableView.dataSource = self
+        //tweetsTableView.rowHeight = UITableViewAutomaticDimension
+        //tweetsTableView.estimatedRowHeight = 120
+        
         TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
             self.tweets = tweets
             
-            for tweet in tweets {
+            self.tweetsTableView.reloadData()
+            /*for tweet in tweets {
                 print(tweet.text!)
-            }
+            }*/
         }, failure: { (error: NSError) in
             print(error.localizedDescription)
         })
+        
+        self.tweetsTableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,6 +43,26 @@ class TweetsViewController: UIViewController {
 
     @IBAction func onLogout(_ sender: Any) {
         TwitterClient.sharedInstance?.logout()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tweets != nil {
+            return tweets!.count
+        }
+        else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tweetsTableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
+        let tweet = tweets[indexPath.row]
+        cell.profPic.setImageWith(tweet.person?.profileURL as! URL)
+        cell.username.text = tweet.person?.screenName as String?
+        cell.tweetText.text = tweet.text as String?
+        cell.timeStamp.text = tweet.timestamp?.description
+        
+        return cell
     }
     
     /*
