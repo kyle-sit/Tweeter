@@ -19,8 +19,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         tweetsTableView.delegate = self
         tweetsTableView.dataSource = self
-        //tweetsTableView.rowHeight = UITableViewAutomaticDimension
-        //tweetsTableView.estimatedRowHeight = 120
+        tweetsTableView.rowHeight = UITableViewAutomaticDimension
+        tweetsTableView.estimatedRowHeight = 120
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.cyan
         
         TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
             self.tweets = tweets
@@ -61,7 +63,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.profPic.setImageWith(tweet.person?.profileURL as! URL)
         cell.username.text = tweet.person?.screenName as String?
         cell.tweetText.text = tweet.text as String?
-        cell.timeStamp.text = tweet.timestamp?.description
+        
+        let index = tweet.timestamp?.description.index((tweet.timestamp?.description.startIndex)!, offsetBy: 10)
+        cell.timeStamp.text = tweet.timestamp?.description.substring(to: index!)
+        
         cell.favoriteCount.text = "\(tweet.favoritesCount)"
         cell.retweetCount.text = "\(tweet.retweetCount)"
         

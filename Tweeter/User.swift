@@ -25,8 +25,11 @@ class User: NSObject {
         
         let profileURLString = dictionary["profile_image_url_https"] as? String
         if let profileURLString = profileURLString {
-            profileURL = NSURL(string: profileURLString)
+            let normalSized = profileURLString.replacingOccurrences(of: "_normal.", with: ".", options: .literal, range: nil)
+            profileURL = NSURL(string: normalSized)
         }
+        
+        
     }
     
     static var _currentUser: User?
