@@ -20,7 +20,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweetsTableView.delegate = self
         tweetsTableView.dataSource = self
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
-        tweetsTableView.estimatedRowHeight = 120
+        tweetsTableView.estimatedRowHeight = 160
         
         self.navigationController?.navigationBar.barTintColor = UIColor.cyan
         
@@ -71,6 +71,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.retweetCount.text = "\(tweet.retweetCount)"
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tweetsTableView.deselectRow(at: indexPath, animated: true)
     }
     
     /*
