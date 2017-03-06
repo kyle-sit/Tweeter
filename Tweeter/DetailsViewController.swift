@@ -18,11 +18,20 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var numRetweets: UILabel!
     @IBOutlet weak var numFavorites: UILabel!
     
+    var tweet: Tweet?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //tweeterImage.setImageWith(tweet?.profileURL as! URL)
+        username.text = tweet?.person?.screenName as String?
+        tweetText.text = tweet?.text as String?
+        
+        let index = tweet?.timestamp?.description.index((tweet?.timestamp?.description.startIndex)!, offsetBy: 10)
+        timestamp.text = tweet?.timestamp?.description.substring(to: index!)
+        
+        numFavorites.text = "\(tweet?.favoritesCount)"
+        numRetweets.text = "\(tweet?.retweetCount)"
     }
 
     override func didReceiveMemoryWarning() {
