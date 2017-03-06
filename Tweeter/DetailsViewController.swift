@@ -9,7 +9,16 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
-
+    
+    @IBOutlet weak var tweeterImage: UIImageView!
+    @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var handle: UILabel!
+    @IBOutlet weak var tweetText: UILabel!
+    @IBOutlet weak var timestamp: UILabel!
+    @IBOutlet weak var numRetweets: UILabel!
+    @IBOutlet weak var numFavorites: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,6 +28,12 @@ class DetailsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func onRetweet(_ sender: Any) {
+    }
+    
+    @IBAction func onFavorite(_ sender: Any) {
     }
     
 
