@@ -69,6 +69,7 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="t6R-P2-smO">
                                                     <rect key="frame" x="13" y="8" width="85" height="84"/>
+                                                    <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="84" id="5Mx-py-aIm"/>
                                                         <constraint firstAttribute="width" constant="85" id="6R0-gA-1ji"/>
@@ -155,7 +156,7 @@
                                             <outlet property="timeStamp" destination="ERN-ch-jeH" id="0QJ-dX-rIf"/>
                                             <outlet property="tweetText" destination="XcO-Dv-iZ3" id="IMr-zj-BOR"/>
                                             <outlet property="username" destination="Ymf-cb-1Yh" id="GYs-W6-3O3"/>
-                                            <segue destination="8lg-gc-3eh" kind="push" id="stq-T2-X5n"/>
+                                            <segue destination="8lg-gc-3eh" kind="show" id="stq-T2-X5n"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -172,11 +173,30 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tweetsTableView" destination="QkZ-wC-VVc" id="b4i-rQ-2LE"/>
+                        <segue destination="gmJ-zf-Xyu" kind="show" identifier="toProfileVC" id="Qok-xa-g1n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="itW-69-6E2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1885.5999999999999" y="138.98050974512745"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="fn8-n4-TXw">
+            <objects>
+                <viewController id="gmJ-zf-Xyu" customClass="ProfileViewController" customModule="Tweeter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3Hl-YT-bAW"/>
+                        <viewControllerLayoutGuide type="bottom" id="Qlh-MI-07a"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0U7-u5-YJm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VWD-Ja-xXv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3175" y="-85"/>
         </scene>
         <!--Tweet-->
         <scene sceneID="4ka-oR-mjk">
@@ -346,7 +366,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1J-Xf-Ncw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2788" y="138.98050974512745"/>
+            <point key="canvasLocation" x="3186" y="623"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E99-WT-LUw">

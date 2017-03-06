@@ -60,13 +60,24 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tweetsTableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         let tweet = tweets[indexPath.row]
+        
+        //Prof Pic stuff including Segue
         cell.profPic.setImageWith(tweet.person?.profileURL as! URL)
+        cell.profPic.isUserInteractionEnabled = true
+        let tapped = UITapGestureRecognizer(target: self, action: #selector(self.tapOnProfPic(recognizer:)))
+        tapped.numberOfTapsRequired = 1
+        tapped.numberOfTouchesRequired = 1
+        cell.profPic.addGestureRecognizer(tapped)
+        
+        //Cell info
         cell.username.text = tweet.person?.name as String?
         cell.tweetText.text = tweet.text as String?
         
+        //Editing timestamp
         let index = tweet.timestamp?.description.index((tweet.timestamp?.description.startIndex)!, offsetBy: 10)
         cell.timeStamp.text = tweet.timestamp?.description.substring(to: index!)
         
+        //button numbers
         cell.favoriteCount.text = "\(tweet.favoritesCount)"
         cell.retweetCount.text = "\(tweet.retweetCount)"
         
@@ -78,14 +89,23 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let cell = sender as! TweetCell
-        let indexPath = tweetsTableView.indexPath(for: cell)
-        let tweet = tweets[(indexPath?.row)!]
-        
-        let detailViewController = segue.destination as! DetailsViewController
-        detailViewController.tweet = tweet
-        
+        if(segue.identifier == "toProfileVC") {
+            
+        }
+        else {
+            let cell = sender as! TweetCell
+            let indexPath = tweetsTableView.indexPath(for: cell)
+            let tweet = tweets[(indexPath?.row)!]
+            
+            let detailViewController = segue.destination as! DetailsViewController
+            detailViewController.tweet = tweet
+        }
     }
  
+    func tapOnProfPic(recognizer:UITapGestureRecognizer) {
+        /*guard let imageView = recognizer.view as? UIImageView
+            else{return}*/
+        self.performSegue(withIdentifier: "toProfileVC", sender: recognizer)
+    }
 
 }
