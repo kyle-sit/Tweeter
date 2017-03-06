@@ -61,7 +61,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tweetsTableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         let tweet = tweets[indexPath.row]
         cell.profPic.setImageWith(tweet.person?.profileURL as! URL)
-        cell.username.text = tweet.person?.screenName as String?
+        cell.username.text = tweet.person?.name as String?
         cell.tweetText.text = tweet.text as String?
         
         let index = tweet.timestamp?.description.index((tweet.timestamp?.description.startIndex)!, offsetBy: 10)

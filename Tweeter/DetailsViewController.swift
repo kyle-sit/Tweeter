@@ -23,15 +23,19 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //tweeterImage.setImageWith(tweet?.profileURL as! URL)
-        username.text = tweet?.person?.screenName as String?
+        tweeterImage.setImageWith(tweet?.person?.profileURL as! URL)
+        tweeterImage.layer.cornerRadius = 4
+        tweeterImage.clipsToBounds  = true
+        
+        username.text = tweet?.person?.name as String?
+        handle.text = "@\((tweet?.person?.screenName as String?)!)"
         tweetText.text = tweet?.text as String?
         
         let index = tweet?.timestamp?.description.index((tweet?.timestamp?.description.startIndex)!, offsetBy: 10)
         timestamp.text = tweet?.timestamp?.description.substring(to: index!)
         
-        numFavorites.text = "\(tweet?.favoritesCount)"
-        numRetweets.text = "\(tweet?.retweetCount)"
+        numFavorites.text = "\(tweet!.favoritesCount)"
+        numRetweets.text = "\(tweet!.retweetCount)"
     }
 
     override func didReceiveMemoryWarning() {

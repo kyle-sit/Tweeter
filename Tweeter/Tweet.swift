@@ -14,7 +14,6 @@ class Tweet: NSObject {
     var timestamp: NSDate?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
-    var profileURL: NSURL?
     
     var person: User?
     
