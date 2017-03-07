@@ -64,6 +64,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //Prof Pic stuff including Segue
         cell.profPic.setImageWith(tweet.person?.profileURL as! URL)
         cell.profPic.isUserInteractionEnabled = true
+        cell.profPic.tag = indexPath.row
         let tapped = UITapGestureRecognizer(target: self, action: #selector(self.tapOnProfPic(recognizer:)))
         tapped.numberOfTapsRequired = 1
         tapped.numberOfTouchesRequired = 1
@@ -90,7 +91,13 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toProfileVC") {
+            let image = sender as! UIImageView
+            let index = (image.tag) as Int
+            let tweet = tweets[index]
+            let user = tweet.person
             
+            let detailViewController = segue.destination as! ProfileViewController
+            detailViewController.user = user
         }
         else {
             let cell = sender as! TweetCell
@@ -103,9 +110,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
  
     func tapOnProfPic(recognizer:UITapGestureRecognizer) {
-        /*guard let imageView = recognizer.view as? UIImageView
-            else{return}*/
-        self.performSegue(withIdentifier: "toProfileVC", sender: recognizer)
+        guard let imageView = recognizer.view as? UIImageView
+            else{return}
+        self.performSegue(withIdentifier: "toProfileVC", sender: imageView)
     }
 
 }

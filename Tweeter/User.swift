@@ -13,7 +13,12 @@ class User: NSObject {
     var name: NSString?
     var screenName: NSString?
     var profileURL: NSURL?
+    var backgroundURL: NSURL?
     var tagline: NSString?
+    var followers: Int?
+    var following: Int?
+    var numTweets: Int?
+    
     
     var dictionary: NSDictionary?
     
@@ -22,11 +27,20 @@ class User: NSObject {
         name = dictionary["name"] as? String as NSString?
         screenName = dictionary["screen_name"] as? String as NSString?
         tagline = dictionary["description"] as? String as NSString?
+        followers = (dictionary["followers_count"] as! Int)
+        following = (dictionary["friends_count"] as! Int)
+        numTweets = (dictionary["statuses_count"] as! Int)
         
         let profileURLString = dictionary["profile_image_url_https"] as? String
         if let profileURLString = profileURLString {
             let normalSized = profileURLString.replacingOccurrences(of: "_normal.", with: ".", options: .literal, range: nil)
             profileURL = NSURL(string: normalSized)
+        }
+        
+        let backgroundURLString = dictionary["profile_background_image_url_https"] as? String
+        if let backgroundURLString = backgroundURLString {
+            let normalSized2 = backgroundURLString.replacingOccurrences(of: "_normal.", with: ".", options: .literal, range: nil)
+            backgroundURL = NSURL(string: normalSized2)
         }
         
         

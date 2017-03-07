@@ -19,10 +19,26 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var numFollowers: UILabel!
     @IBOutlet weak var userTweetsTableView: UITableView!
     
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //profPic
+        userImage.setImageWith(user?.profileURL as! URL)
+        userImage.layer.cornerRadius = 4
+        userImage.clipsToBounds  = true
+        //background Pic
+        backgroundImage.setImageWith(user?.backgroundURL as! URL)
+        
+        //username and handle
+        username.text = user?.name as String?
+        handle.text = "@\((user?.screenName as String?)!)"
+        
+        //Statistics
+        numFollowing.text = "\((user?.following)!)"
+        numFollowers.text = "\((user?.followers)!)"
+        numTweets.text = "\((user?.numTweets)!)"
     }
 
     override func didReceiveMemoryWarning() {
