@@ -17,6 +17,11 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var timestamp: UILabel!
     @IBOutlet weak var numRetweets: UILabel!
     @IBOutlet weak var numFavorites: UILabel!
+    @IBOutlet weak var retweetButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+    
+    var favorited: Bool = false
+    var retweeted: Bool = false
     
     var tweet: Tweet?
     
@@ -44,9 +49,37 @@ class DetailsViewController: UIViewController {
     }
     
     @IBAction func onRetweet(_ sender: Any) {
+        if(!retweeted) {
+            let retweetImage = UIImage(named: "retweet-icon-green")
+            retweetButton.setImage(retweetImage, for: UIControlState.normal)
+            let increment = Int(numRetweets.text!)
+            numRetweets.text = "\(increment! + 1)"
+            retweeted = true
+        }
+        else {
+            let retweetImage = UIImage(named: "retweet-icon")
+            retweetButton.setImage(retweetImage, for: UIControlState.normal)
+            let decrement = Int(numRetweets.text!)
+            numRetweets.text = "\(decrement! - 1)"
+            retweeted = false
+        }
     }
     
     @IBAction func onFavorite(_ sender: Any) {
+        if(!favorited) {
+            let favoriteImage = UIImage(named: "favor-icon-red")
+            favoriteButton.setImage(favoriteImage, for: UIControlState.normal)
+            let increment = Int(numFavorites.text!)
+            numFavorites.text = "\(increment! + 1)"
+            favorited = true
+        }
+        else {
+            let favoriteImage = UIImage(named: "favor-icon")
+            favoriteButton.setImage(favoriteImage, for: UIControlState.normal)
+            let decrement = Int(numFavorites.text!)
+            numFavorites.text = "\(decrement! - 1)"
+            favorited = false
+        }
     }
     
 

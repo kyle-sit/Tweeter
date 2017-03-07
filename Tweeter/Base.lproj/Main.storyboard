@@ -453,9 +453,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Tweet" id="AuF-4c-3tf"/>
                     <connections>
+                        <outlet property="favoriteButton" destination="uep-Mu-Ut3" id="GXA-57-TQT"/>
                         <outlet property="handle" destination="MlP-i2-nZ2" id="1P7-yU-oQp"/>
                         <outlet property="numFavorites" destination="ZIJ-sA-SFs" id="Zo3-iB-fe4"/>
                         <outlet property="numRetweets" destination="gfp-3F-dae" id="u2H-jf-rlH"/>
+                        <outlet property="retweetButton" destination="omw-qC-WJ7" id="cKX-aU-oHM"/>
                         <outlet property="timestamp" destination="N7K-Ap-D2i" id="ZcN-1S-Vhy"/>
                         <outlet property="tweetText" destination="rSs-29-IAM" id="Yds-UF-p1d"/>
                         <outlet property="tweeterImage" destination="TCn-CP-Xw7" id="KRl-oz-oiO"/>

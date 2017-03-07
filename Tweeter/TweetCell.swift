@@ -20,6 +20,9 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
     
+    var favorited: Bool = false
+    var retweeted: Bool = false
+    
     //var tweet: Tweet?
     
     override func awakeFromNib() {
@@ -43,17 +46,37 @@ class TweetCell: UITableViewCell {
     }
 
     @IBAction func onFavorite(_ sender: Any) {
-        let favoriteImage = UIImage(named: "favor-icon-red")
-        favoriteButton.setImage(favoriteImage, for: UIControlState.normal)
-        let increment = Int(favoriteCount.text!)
-        favoriteCount.text = "\(increment! + 1)"
+        if(!favorited) {
+            let favoriteImage = UIImage(named: "favor-icon-red")
+            favoriteButton.setImage(favoriteImage, for: UIControlState.normal)
+            let increment = Int(favoriteCount.text!)
+            favoriteCount.text = "\(increment! + 1)"
+            favorited = true
+        }
+        else {
+            let favoriteImage = UIImage(named: "favor-icon")
+            favoriteButton.setImage(favoriteImage, for: UIControlState.normal)
+            let decrement = Int(favoriteCount.text!)
+            favoriteCount.text = "\(decrement! - 1)"
+            favorited = false
+        }
     }
     
     @IBAction func onRetweet(_ sender: Any) {
-        let retweetImage = UIImage(named: "retweet-icon-green")
-        retweetButton.setImage(retweetImage, for: UIControlState.normal)
-        let increment = Int(retweetCount.text!)
-        retweetCount.text = "\(increment! + 1)"
+        if(!retweeted) {
+            let retweetImage = UIImage(named: "retweet-icon-green")
+            retweetButton.setImage(retweetImage, for: UIControlState.normal)
+            let increment = Int(retweetCount.text!)
+            retweetCount.text = "\(increment! + 1)"
+            retweeted = true
+        }
+        else {
+            let retweetImage = UIImage(named: "retweet-icon")
+            retweetButton.setImage(retweetImage, for: UIControlState.normal)
+            let decrement = Int(retweetCount.text!)
+            retweetCount.text = "\(decrement! - 1)"
+            retweeted = false
+        }
     }
     
 }
