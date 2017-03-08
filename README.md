@@ -21,11 +21,36 @@ The following features will be implemented:
 - [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
 - [ ] User can pull to refresh.
 
+Second Week:
+
+- [x] Tweet Details Page: User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
+- [x] Profile page:
+   - [x] Contains the user header view
+   - [x] Contains a section with the users basic stats: # tweets, # following, # followers
+- [x] Home Timeline: Tapping on a user image should bring up that user's profile page
+- [x] Compose Page: User can compose a new tweet by tapping on a compose button.
+
+The following features will be implemented:
+
+- [ ] When composing, you should have a countdown in the upper right for the tweet limit.
+- [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
+- [ ] Profile Page
+   - [ ] Implement the paging view for the user description.
+   - [ ] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
+   - [ ] Pulling down the profile page should blur and resize the header image.
+- [ ] Account switching
+   - [ ] Long press on tab bar to bring up Account view with animation
+   - [ ] Tap account to switch to
+   - [ ] Include a plus button to Add an Account
+   - [ ] Swipe to delete an account
+
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
 http://i.imgur.com/Hsz9x27.gif
+
+http://i.imgur.com/TT4Mfyd.gif
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
