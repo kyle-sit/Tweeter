@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userTweetsTableView: UITableView!
     
     var user: User?
+    var composeDelegate: ComposeVCDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,17 +51,16 @@ class ProfileViewController: UIViewController {
     }
     
     func tappedOn() {
-        performSegue(withIdentifier: "composeTweet2", sender: ProfileViewController.self)
+        performSegue(withIdentifier: "composeTweet2", sender: ComposeViewController.self)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        //setting compose delegate
+        if(segue.identifier == "toComposeTweet2"){
+            let navController = segue.destination as! UINavigationController
+            let vc = navController.topViewController as! ComposeViewController
+            vc.composeDelegate = self.composeDelegate
+        }
     }
-    */
 
 }

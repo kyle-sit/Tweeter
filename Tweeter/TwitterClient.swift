@@ -83,6 +83,27 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func tweetWithText(_ text: String, inReplyToTweet: Tweet?, success: @escaping (Tweet)->(), failure: @escaping (Error?)->()) {
+        
+        var params: [String: String] = [String: String]()
+        params.updateValue(text, forKey: "status")
+        
+        if let tweet = inReplyToTweet {
+            let replyTweetID = tweet.id! as String
+            params.updateValue(replyTweetID, forKey: "in_reply_to_status_id")
+        }
+        
+        /*self.post("1.1/statuses/update.json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            
+            let tweetResponse = response as! NSDictionary
+            let tweet = Tweet(dictionary: tweetResponse)
+            success(tweet)
+        }) { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+        }*/
+    }
+
+    
     /*func retweet(success: (Tweet) -> (), failure: (NSError) -> ()) {
 
     }

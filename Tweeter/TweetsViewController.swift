@@ -24,7 +24,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.navigationController?.navigationBar.barTintColor = UIColor.cyan
         
-        TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
+        /*TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
             self.tweets = tweets
             
             self.tweetsTableView.reloadData()
@@ -33,7 +33,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }*/
         }, failure: { (error: NSError) in
             print(error.localizedDescription)
-        })
+        })*/
+        
+        getTweets()
         
         let button3 = UIBarButtonItem(image: UIImage(named: "edit-icon"), style: .plain, target: self, action: #selector(tappedOn)) // action:#selector(Class.MethodName) for swift 3
         self.navigationItem.rightBarButtonItem  = button3
@@ -111,7 +113,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             detailViewController.tweet = tweet
         }
         else {
-            
+            if segue.identifier == "composeTweets3" {
+                let destination = segue.destination as! ComposeViewController
+                destination.composeDelegate = self;
+            }
         }
     }
  
@@ -124,5 +129,25 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tappedOn() {
         performSegue(withIdentifier: "composeTweet3", sender: TweetsViewController.self)
     }
+    
+    func getTweets() {
+        TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
+            self.tweets = tweets
+            self.tweetsTableView.reloadData()
+            
+        }) { (error: NSError) -> () in
+            print(error.localizedDescription)
+        }
+        
+        self.tweetsTableView.reloadData()
+        
+    }
 
+}
+
+extension TweetsViewController: ComposeVCDelegate{
+    func uploadTweet(tweet: Tweet) {
+        getTweets()
+        tweetsTableView.reloadData() //reload
+    }
 }

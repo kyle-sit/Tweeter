@@ -23,6 +23,7 @@ class DetailsViewController: UIViewController {
     var favorited: Bool = false
     var retweeted: Bool = false
     
+    var composeDelegate: ComposeVCDelegate?
     var tweet: Tweet?
     
     override func viewDidLoad() {
@@ -86,18 +87,16 @@ class DetailsViewController: UIViewController {
     }
     
     func tappedOn() {
-        performSegue(withIdentifier: "composeTweet1", sender: DetailsViewController.self)
+        performSegue(withIdentifier: "composeTweet1", sender: ComposeViewController.self)
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if(segue.identifier == "composeTweet1") {
+            let navController = segue.destination as! UINavigationController
+            let vc = navController.topViewController as! ComposeViewController
+            vc.reply = tweet;
+            vc.composeDelegate = self.composeDelegate
+        }
     }
-    */
 
 }

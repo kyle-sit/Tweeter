@@ -19,6 +19,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var Handle: UILabel!
     @IBOutlet weak var tweetText: UITextView!
     
+    var reply: Tweet?
+    var composeDelegate: ComposeVCDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +29,20 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         tweetText.layer.cornerRadius = 6;
         tweetText.clipsToBounds = true;
         
+        if(reply != nil) {
+            tweetText.text = "@" + "\(reply?.person?.screenName as! String) ";
+            tweetText.textColor = UIColor.black
+        }
+        else{
+            tweetText.text = "What's up fam?"
+            tweetText.textColor = UIColor.lightGray
+        }
         
-        // Do any additional setup after loading the view.
+        self.Handle.text = User.currentUser?.screenName as String?
+        self.Name.text = User.currentUser?.name as String?
+        self.UserImage.setImageWith(User.currentUser?.profileURL as! URL)
+        self.UserImage.layer.cornerRadius = 6;
+        self.UserImage.clipsToBounds = true;
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,9 +57,36 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func onTweet(_ sender: Any) {
+        TwitterClient.sharedInstance?.tweetWithText(self.tweetText.text, inReplyToTweet: self.reply, success: { (tweet: Tweet) in
+            
+            print("WOAHHH")
+            self.tweetText.resignFirstResponder()
+            self.composeDelegate?.uploadTweet(tweet: tweet)
+            self.dismiss(animated: true, completion: nil)
+            
+        }) { (error: Error?) in
+            print(error?.localizedDescription as Any)
+        }
+        tweetText.resignFirstResponder()
     }
     
-
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "What's up fam?"
+            textView.textColor = UIColor.lightGray
+        }
+        else{
+            textView.resignFirstResponder()
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
