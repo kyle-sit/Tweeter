@@ -39,6 +39,9 @@ class ProfileViewController: UIViewController {
         numFollowing.text = "\((user?.following)!)"
         numFollowers.text = "\((user?.followers)!)"
         numTweets.text = "\((user?.numTweets)!)"
+        
+        let button1 = UIBarButtonItem(image: UIImage(named: "edit-icon"), style: .plain, target: self, action: #selector(tappedOn)) // action:#selector(Class.MethodName) for swift 3
+        self.navigationItem.rightBarButtonItem  = button1
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,6 +49,9 @@ class ProfileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func tappedOn() {
+        performSegue(withIdentifier: "composeTweet2", sender: ProfileViewController.self)
+    }
 
     /*
     // MARK: - Navigation

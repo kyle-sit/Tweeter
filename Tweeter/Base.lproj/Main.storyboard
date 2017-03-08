@@ -156,7 +156,7 @@
                                             <outlet property="timeStamp" destination="ERN-ch-jeH" id="0QJ-dX-rIf"/>
                                             <outlet property="tweetText" destination="XcO-Dv-iZ3" id="IMr-zj-BOR"/>
                                             <outlet property="username" destination="Ymf-cb-1Yh" id="GYs-W6-3O3"/>
-                                            <segue destination="8lg-gc-3eh" kind="show" id="stq-T2-X5n"/>
+                                            <segue destination="8lg-gc-3eh" kind="show" identifier="toDetails" id="stq-T2-X5n"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -174,6 +174,7 @@
                     <connections>
                         <outlet property="tweetsTableView" destination="QkZ-wC-VVc" id="b4i-rQ-2LE"/>
                         <segue destination="gmJ-zf-Xyu" kind="show" identifier="toProfileVC" id="Qok-xa-g1n"/>
+                        <segue destination="0Cd-ob-MEg" kind="presentation" identifier="composeTweet3" id="QtW-4j-5O3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="itW-69-6E2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -261,7 +262,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="MiL-EM-akL" customClass="TweetCell" customModule="Tweeter" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetCell" id="MiL-EM-akL" customClass="TweetCell" customModule="Tweeter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MiL-EM-akL" id="Gib-Mm-fXh">
@@ -290,11 +291,75 @@
                         <outlet property="userImage" destination="syQ-jJ-Lmq" id="Omx-gK-8ib"/>
                         <outlet property="userTweetsTableView" destination="MC4-Tw-dzj" id="aL0-KP-jg6"/>
                         <outlet property="username" destination="2go-Pv-1iM" id="t1k-JT-85D"/>
+                        <segue destination="0Cd-ob-MEg" kind="presentation" identifier="composeTweet2" id="9oV-PH-C8v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VWD-Ja-xXv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3173.5999999999999" y="-85.007496251874073"/>
+            <point key="canvasLocation" x="3140" y="-434"/>
+        </scene>
+        <!--Compose View Controller-->
+        <scene sceneID="BfK-IZ-ADM">
+            <objects>
+                <viewController id="X9S-3o-CBN" customClass="ComposeViewController" customModule="Tweeter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9Uk-AI-cpP"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ktz-Mz-grC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wdB-PI-0qy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TMO-DD-22I">
+                                <rect key="frame" x="16" y="91" width="69" height="73"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HH6-Sw-yTh">
+                                <rect key="frame" x="109" y="91" width="45" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Handle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVg-ja-0l9">
+                                <rect key="frame" x="109" y="117" width="55" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5pK-mu-Vey">
+                                <rect key="frame" x="16" y="172" width="343" height="205"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4Rp-Fa-FJL">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="BuI-Nt-X0z">
+                            <connections>
+                                <action selector="onCancel:" destination="X9S-3o-CBN" id="suV-GA-Azw"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Tweet" id="Fmq-V0-bmz">
+                            <connections>
+                                <action selector="onTweet:" destination="X9S-3o-CBN" id="8i5-pr-b7f"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="Handle" destination="JVg-ja-0l9" id="Hyc-Mt-fJm"/>
+                        <outlet property="Name" destination="HH6-Sw-yTh" id="H06-Ed-o1R"/>
+                        <outlet property="UserImage" destination="TMO-DD-22I" id="4zt-Rt-yZ0"/>
+                        <outlet property="tweetText" destination="5pK-mu-Vey" id="ADq-Sa-yNd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8yM-5w-6dp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5284" y="-71.514242878560722"/>
         </scene>
         <!--Tweet-->
         <scene sceneID="4ka-oR-mjk">
@@ -330,7 +395,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweet Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSs-29-IAM">
-                                <rect key="frame" x="28" y="182" width="300" height="20.5"/>
+                                <rect key="frame" x="28" y="182" width="300" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -462,11 +527,12 @@
                         <outlet property="tweetText" destination="rSs-29-IAM" id="Yds-UF-p1d"/>
                         <outlet property="tweeterImage" destination="TCn-CP-Xw7" id="KRl-oz-oiO"/>
                         <outlet property="username" destination="nVx-2C-cfB" id="tN0-z8-5kT"/>
+                        <segue destination="0Cd-ob-MEg" kind="presentation" identifier="composeTweet1" id="bPP-mk-r2f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1J-Xf-Ncw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3186" y="623"/>
+            <point key="canvasLocation" x="3194" y="716"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E99-WT-LUw">
@@ -486,10 +552,31 @@
             </objects>
             <point key="canvasLocation" x="994" y="139"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7yW-jw-HaO">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0Cd-ob-MEg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ty3-Rv-6Gr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="X9S-3o-CBN" kind="relationship" relationship="rootViewController" id="itx-jN-TzR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LiK-Hy-ZtS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4344.8000000000002" y="-71.514242878560722"/>
+        </scene>
     </scenes>
     <resources>
         <image name="favor-icon" width="30" height="30"/>
         <image name="reply-icon" width="30" height="30"/>
         <image name="retweet-icon" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="QtW-4j-5O3"/>
+    </inferredMetricsTieBreakers>
 </document>

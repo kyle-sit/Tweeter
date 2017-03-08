@@ -35,6 +35,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             print(error.localizedDescription)
         })
         
+        let button3 = UIBarButtonItem(image: UIImage(named: "edit-icon"), style: .plain, target: self, action: #selector(tappedOn)) // action:#selector(Class.MethodName) for swift 3
+        self.navigationItem.rightBarButtonItem  = button3
+        
         self.tweetsTableView.reloadData()
     }
 
@@ -99,7 +102,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let detailViewController = segue.destination as! ProfileViewController
             detailViewController.user = user
         }
-        else {
+        else if(segue.identifier == "toDetails"){
             let cell = sender as! TweetCell
             let indexPath = tweetsTableView.indexPath(for: cell)
             let tweet = tweets[(indexPath?.row)!]
@@ -107,12 +110,19 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let detailViewController = segue.destination as! DetailsViewController
             detailViewController.tweet = tweet
         }
+        else {
+            
+        }
     }
  
     func tapOnProfPic(recognizer:UITapGestureRecognizer) {
         guard let imageView = recognizer.view as? UIImageView
             else{return}
         self.performSegue(withIdentifier: "toProfileVC", sender: imageView)
+    }
+    
+    func tappedOn() {
+        performSegue(withIdentifier: "composeTweet3", sender: TweetsViewController.self)
     }
 
 }

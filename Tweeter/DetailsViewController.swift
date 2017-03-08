@@ -41,6 +41,9 @@ class DetailsViewController: UIViewController {
         
         numFavorites.text = "\(tweet!.favoritesCount)"
         numRetweets.text = "\(tweet!.retweetCount)"
+        
+        let button2 = UIBarButtonItem(title: "reply", style: .plain, target: self, action: #selector(tappedOn)) // action:#selector(Class.MethodName) for swift 3
+        self.navigationItem.rightBarButtonItem  = button2
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,6 +83,10 @@ class DetailsViewController: UIViewController {
             numFavorites.text = "\(decrement! - 1)"
             favorited = false
         }
+    }
+    
+    func tappedOn() {
+        performSegue(withIdentifier: "composeTweet1", sender: DetailsViewController.self)
     }
     
 
