@@ -54,15 +54,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-    /*func application(app: UIApplication, openURL url: URL, options: [String : AnyObject]) -> Bool {
-        print(url.description)
-        return true
-    }*/
     
+    //function gets called when app is opened from web
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print(url.description)
+        //print(url.description)
         
+        //call a method to retrieve access token for api
         TwitterClient.sharedInstance?.handleOpenUrl(url: url as NSURL)
         
         return true
