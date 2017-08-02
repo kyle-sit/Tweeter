@@ -14,9 +14,9 @@ class TwitterClient: BDBOAuth1SessionManager {
     //static instance for use in all of app
     static let sharedInstance = TwitterClient(baseURL: NSURL(string: "https://api.twitter.com/")! as URL!, consumerKey: "GEutc46f8dzb0vGxwiU0HcGm6", consumerSecret: "Gjr89aNAx54DzJGkrJbvsoRN4ZhNpojwu6h1ruIFacQrfpNi8e")
     
+    //login succes and failure variable closures which allow me to detect success or failure at top level
     var loginSuccess: (() -> ())?
     var loginFailure: ((NSError) -> ())?
-    
     
     //function for logging in
     func login(success: @escaping () -> (), failure: @escaping (NSError) -> ()) {
@@ -37,7 +37,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         }, failure: { (error: Error?) in
             
             //failure results in printing error and sending back
-            print("error: \(String(describing: error?.localizedDescription))")
+           // print("error: \(String(describing: error?.localizedDescription))")
             self.loginFailure?(error! as NSError)
         })
     }
@@ -45,9 +45,11 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     //logout function
     func logout() {
+        //clear current user and logout
         User.currentUser = nil
         deauthorize()
         
+        //post notificaiton for app delegate to see
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UserDidLogout"), object: nil)
     }
     
@@ -60,6 +62,7 @@ class TwitterClient: BDBOAuth1SessionManager {
             let userDictionary  = response as! NSDictionary
             let user = User(dictionary: userDictionary)
             
+            //return it to be used by caller
             success(user)
             
         }, failure: { (task: URLSessionDataTask?, error: Error) in
@@ -74,6 +77,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential?) in
             
+            //currentAccount call to set currentUser
             self.currentAccount(success: { (user: User) in
                 User.currentUser = user
                 self.loginSuccess?()
@@ -81,11 +85,14 @@ class TwitterClient: BDBOAuth1SessionManager {
                 self.loginFailure?(error)
             })
         }, failure: { (error: Error?) in
-            print("error: \(String(describing: error?.localizedDescription))")
+            //print("error: \(String(describing: error?.localizedDescription))")
             self.loginFailure?(error! as NSError)
         })
     }
     
+    
+    //function to grab array of timeline tweets from api and store them in Model
+    //passes in a closure so that we can hand back all tweets on success
     func homeTimeLine(success: @escaping ([Tweet]) -> (), failure: @escaping (NSError) -> ()) {
         get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             

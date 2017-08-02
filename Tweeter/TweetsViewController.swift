@@ -10,49 +10,53 @@ import UIKit
 
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    //tableview outlet
     @IBOutlet weak var tweetsTableView: UITableView!    
     
+    //instance variable array for tweets
     var tweets: [Tweet]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //setting delegagtes and datasource
         tweetsTableView.delegate = self
         tweetsTableView.dataSource = self
+        
+        //autolayout dimensions
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
         tweetsTableView.estimatedRowHeight = 160
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.cyan
+        //setting naviation bar color
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.barTintColor = UIColor(red: 0.251, green: 0.8588, blue: 0.9765, alpha: 1.0)
+        }
         
-        /*TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
-            self.tweets = tweets
-            
-            self.tweetsTableView.reloadData()
-            /*for tweet in tweets {
-                print(tweet.text!)
-            }*/
-        }, failure: { (error: NSError) in
-            print(error.localizedDescription)
-        })*/
-        
+        //initial population of tableview
         getTweets()
         
+        //setting a tweet button in the top right bar button
         let button3 = UIBarButtonItem(image: UIImage(named: "edit-icon"), style: .plain, target: self, action: #selector(tappedOn)) // action:#selector(Class.MethodName) for swift 3
         self.navigationItem.rightBarButtonItem  = button3
         
         self.tweetsTableView.reloadData()
     }
 
+    
+    //memory warning
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
 
+    //onclick method for logout button
     @IBAction func onLogout(_ sender: Any) {
         TwitterClient.sharedInstance?.logout()
     }
     
+    
+    //method for tableview row count
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tweets != nil {
             return tweets!.count
@@ -62,7 +66,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    
+    //function setting contents fo tableview
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //dequeuing individual tweet cell
         let cell = tweetsTableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         let tweet = tweets[indexPath.row]
         
@@ -70,6 +77,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.profPic.setImageWith(tweet.person?.profileURL as! URL)
         cell.profPic.isUserInteractionEnabled = true
         cell.profPic.tag = indexPath.row
+        
+        //setting tap gesture recognizer on prof pic
         let tapped = UITapGestureRecognizer(target: self, action: #selector(self.tapOnProfPic(recognizer:)))
         tapped.numberOfTapsRequired = 1
         tapped.numberOfTouchesRequired = 1
@@ -90,10 +99,28 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
+    
+    //function to deselect cell color
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tweetsTableView.deselectRow(at: indexPath, animated: true)
     }
     
+    
+    //function encapsulating populating home timeline
+    func getTweets() {
+        TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
+            self.tweets = tweets
+            self.tweetsTableView.reloadData()
+            
+        }) { (error: NSError) -> () in
+            print(error.localizedDescription)
+        }
+        
+        self.tweetsTableView.reloadData()
+    }
+    
+    
+    //handling segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toProfileVC") {
             let image = sender as! UIImageView
