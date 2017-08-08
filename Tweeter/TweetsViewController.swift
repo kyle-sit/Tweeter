@@ -74,7 +74,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let tweet = tweets[indexPath.row]
         
         //Prof Pic stuff including Segue
-        cell.profPic.setImageWith(tweet.person?.profileURL as! URL)
+        cell.profPic.setImageWith((tweet.person?.profileURL?.absoluteURL)!)
         cell.profPic.isUserInteractionEnabled = true
         cell.profPic.tag = indexPath.row
         
@@ -155,19 +155,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tappedOn() {
         performSegue(withIdentifier: "composeTweet3", sender: TweetsViewController.self)
-    }
-    
-    func getTweets() {
-        TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
-            self.tweets = tweets
-            self.tweetsTableView.reloadData()
-            
-        }) { (error: NSError) -> () in
-            print(error.localizedDescription)
-        }
-        
-        self.tweetsTableView.reloadData()
-        
     }
 
 }

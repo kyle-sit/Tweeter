@@ -26,11 +26,11 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         //profPic
-        userImage.setImageWith(user?.profileURL as! URL)
+        userImage.setImageWith((user?.profileURL?.absoluteURL)!)
         userImage.layer.cornerRadius = 4
         userImage.clipsToBounds  = true
         //background Pic
-        backgroundImage.setImageWith(user?.backgroundURL as! URL)
+        backgroundImage.setImageWith((user?.backgroundURL?.absoluteURL)!)
         
         //username and handle
         username.text = user?.name as String?

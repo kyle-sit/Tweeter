@@ -29,7 +29,7 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tweeterImage.setImageWith(tweet?.person?.profileURL as! URL)
+        tweeterImage.setImageWith((tweet?.person?.profileURL?.absoluteURL)!)
         tweeterImage.layer.cornerRadius = 4
         tweeterImage.clipsToBounds  = true
         

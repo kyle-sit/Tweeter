@@ -30,7 +30,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         tweetText.clipsToBounds = true;
         
         if(reply != nil) {
-            tweetText.text = "@" + "\(reply?.person?.screenName as! String) ";
+            tweetText.text = "@" + "\(String(describing: reply?.person?.screenName as String?)) ";
             tweetText.textColor = UIColor.black
         }
         else{
@@ -40,7 +40,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         
         self.Handle.text = User.currentUser?.screenName as String?
         self.Name.text = User.currentUser?.name as String?
-        self.UserImage.setImageWith(User.currentUser?.profileURL as! URL)
+        self.UserImage.setImageWith((User.currentUser?.profileURL?.absoluteURL)!)
         self.UserImage.layer.cornerRadius = 6;
         self.UserImage.clipsToBounds = true;
     }
