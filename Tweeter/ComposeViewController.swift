@@ -22,6 +22,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     var reply: Tweet?
     var composeDelegate: ComposeVCDelegate?
     
+    
+    //viewDidloads
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,21 +47,26 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         self.UserImage.clipsToBounds = true;
     }
 
+    
+    //memory warning
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //onclick for canceling a tweet
     @IBAction func onCancel(_ sender: Any) {
         //self.settingsDelegate?.didCancelSettings()
         self.dismiss(animated: true, completion: nil)
 
     }
     
+    
+    //onclick for tweeting
     @IBAction func onTweet(_ sender: Any) {
         TwitterClient.sharedInstance?.tweetWithText(self.tweetText.text, inReplyToTweet: self.reply, success: { (tweet: Tweet) in
             
-            print("WOAHHH")
             self.tweetText.resignFirstResponder()
             self.composeDelegate?.uploadTweet(tweet: tweet)
             self.dismiss(animated: true, completion: nil)
@@ -70,6 +77,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         tweetText.resignFirstResponder()
     }
     
+    
+    //setting the textEdit to start
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
@@ -77,6 +86,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    
+    //setting the textEdit to close
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "What's up fam?"

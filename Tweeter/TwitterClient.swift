@@ -107,6 +107,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     }
     
     
+    //method to send tweet to api
     func tweetWithText(_ text: String, inReplyToTweet: Tweet?, success: @escaping (Tweet)->(), failure: @escaping (Error?)->()) {
         
         var params: [String: String] = [String: String]()
