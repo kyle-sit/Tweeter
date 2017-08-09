@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AFNetworking
+import MBProgressHUD
 
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -39,6 +41,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let button3 = UIBarButtonItem(image: UIImage(named: "edit-icon"), style: .plain, target: self, action: #selector(tappedOn)) // action:#selector(Class.MethodName) for swift 3
         self.navigationItem.rightBarButtonItem  = button3
         
+        //pull to refresh
+        refresh()
+        
         self.tweetsTableView.reloadData()
     }
 
@@ -49,7 +54,35 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //function for loading symbol
+    func refresh() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        tweetsTableView.insertSubview(refreshControl, at: 0)
+    }
 
+    //requesting data from API
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        // Reload the tableView now that there is new data
+        self.tweetsTableView.reloadData()
+        
+        // Tell the refreshControl to stop spinning
+        refreshControl.endRefreshing()
+    }
+    
+    
+    //function for pull to refresh animation
+    func pullToRefresh() {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
+        getTweets()
+
+        //pull to refresh animation close
+        MBProgressHUD.hide(for: self.view, animated: true)
+    }
+    
+    
     //onclick method for logout button
     @IBAction func onLogout(_ sender: Any) {
         TwitterClient.sharedInstance?.logout()
@@ -147,12 +180,16 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
  
+    
+    //tap on prof pic segue to profileVC
     func tapOnProfPic(recognizer:UITapGestureRecognizer) {
         guard let imageView = recognizer.view as? UIImageView
             else{return}
         self.performSegue(withIdentifier: "toProfileVC", sender: imageView)
     }
     
+    
+    //onclick for tweeting
     func tappedOn() {
         performSegue(withIdentifier: "composeTweet3", sender: TweetsViewController.self)
     }
