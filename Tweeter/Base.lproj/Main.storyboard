@@ -184,7 +184,7 @@
         <!--Profile-->
         <scene sceneID="fn8-n4-TXw">
             <objects>
-                <viewController title="Profile" id="gmJ-zf-Xyu" customClass="ProfileViewController" customModule="Tweeter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" title="Profile" id="gmJ-zf-Xyu" customClass="ProfileViewController" customModule="Tweeter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3Hl-YT-bAW"/>
                         <viewControllerLayoutGuide type="bottom" id="Qlh-MI-07a"/>
@@ -577,6 +577,6 @@
         <image name="retweet-icon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QtW-4j-5O3"/>
+        <segue reference="9oV-PH-C8v"/>
     </inferredMetricsTieBreakers>
 </document>

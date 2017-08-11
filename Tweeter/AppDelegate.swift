@@ -23,6 +23,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
             window?.rootViewController = vc
+            
+            //Home tab bar
+            let homeNavController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController") as! UINavigationController
+            homeNavController.tabBarItem.title = "Home"
+            homeNavController.tabBarItem.image = UIImage(named: "home-icon")
+            
+            //Profile tab bar
+            let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            profileViewController.user = User.currentUser
+            profileViewController.tabBarItem.title = "User Profile"
+            profileViewController.tabBarItem.image = UIImage(named: "profile-icon")
+            
+            //Tab bar controller allows you to move between both tabs
+            let tabBarController = UITabBarController()
+            tabBarController.viewControllers = [homeNavController, profileViewController]
+            tabBarController.tabBar.barTintColor = UIColor(red: 0.251, green: 0.8588, blue: 0.9765, alpha: 1.0)
+            
+            window?.rootViewController = tabBarController
+            window?.makeKeyAndVisible()
         } 
     
         //looks for user logout notification and resets storyboard 
